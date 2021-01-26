@@ -8,18 +8,18 @@
 
 import UIKit
 
-class DateCell: UICollectionViewCell {
+public class DateCell: UICollectionViewCell {
   
   // MARK: - Public Properties
   
-  enum State {
+  public enum State {
     case normal(isToday: Bool)
     case selected
   }
   
   // MARK: - UIKit
   
-  lazy var dateLabel: UILabel = {
+  public lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.textColor = .label
     label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
@@ -27,7 +27,7 @@ class DateCell: UICollectionViewCell {
     return label
   }()
   
-  lazy var dayLabel: UILabel = {
+  public lazy var dayLabel: UILabel = {
     let label = UILabel()
     label.textColor = .label
     label.font = UIFont.systemFont(ofSize: 14, weight: .light)
@@ -35,7 +35,7 @@ class DateCell: UICollectionViewCell {
     return label
   }()
   
-  lazy var selectionView: UIView = {
+  public lazy var selectionView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.layer.borderWidth = 1
@@ -44,7 +44,7 @@ class DateCell: UICollectionViewCell {
     return view
   }()
   
-  lazy var eventIndicatorView: UIView = {
+  public lazy var eventIndicatorView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = UIColor.systemFill
@@ -56,7 +56,7 @@ class DateCell: UICollectionViewCell {
   
   // MARK: - Private Properties
   
-  let df = DateFormatter()
+  private let df = DateFormatter()
   
   // MARK: - Init
   
@@ -70,7 +70,7 @@ class DateCell: UICollectionViewCell {
   
   // MARK: - Public Methods
   
-  func configureWith(_ date: Date, isToday: Bool) {
+  public func configureWith(_ date: Date, isToday: Bool) {
     // Date Label
     df.dateFormat = "d"
     dateLabel.text = df.string(from: date)
@@ -116,15 +116,7 @@ class DateCell: UICollectionViewCell {
     view.backgroundColor = .clear*/
   }
   
-  func showMarkerView() {
-    eventIndicatorView.backgroundColor = nil
-  }
-  
-  func hideMarkerView() {
-    eventIndicatorView.backgroundColor = .clear
-  }
-  
-  override func layoutSubviews() {
+  public override func layoutSubviews() {
     super.layoutSubviews()
     selectionView.layer.cornerRadius = frame.width * 0.5
   }

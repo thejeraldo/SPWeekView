@@ -9,7 +9,7 @@
 import UIKit
 
 /// The methods adopted by the object you use to manage user interactions with items in a week view.
-protocol SPWeekViewDelegate: class {
+public protocol SPWeekViewDelegate: class {
   
   /// Allows the delegate to configure the cell appearance.
   func configureCell(_ cell: DateCell, for state: DateCell.State)
@@ -25,21 +25,21 @@ protocol SPWeekViewDelegate: class {
 }
 
 /// A view that manages a collection horizontally scrollable dates that are grouped per week (7 days).
-class SPWeekView: UIView {
+public class SPWeekView: UIView {
   
   // MARK: - Public Properties
   
   /// The date items for the view.
-  var dates = [Date]()
+  public var dates = [Date]()
   
   /// The current date for the view.
-  var currentDate = Date()
+  public var currentDate = Date()
   
   /// The currently selected date for the view.
-  var selectedDate: Date?
+  public var selectedDate: Date?
   
   /// The type of scrolling for the week view.
-  enum ScrollType {
+  public enum ScrollType {
     case continous
     case paginated
   }
@@ -47,14 +47,14 @@ class SPWeekView: UIView {
   /// The type of scrolling for the week view.
   /// continous will set the scrolling to be continous.
   /// paginated will set the scrolling to be paginated by 7 days a week.
-  var scrollType: ScrollType = .continous {
+  public var scrollType: ScrollType = .continous {
     didSet {
       collectionView.setCollectionViewLayout(createLayout(), animated: true)
     }
   }
   
   /// The object that acts as the delegate of the week view.
-  weak var delegate: SPWeekViewDelegate?
+  public weak var delegate: SPWeekViewDelegate?
   
   // MARK: - Private Properties
   
@@ -69,17 +69,17 @@ class SPWeekView: UIView {
     return collectionView
   }()
   
-  enum Section: Int, Hashable {
+  public enum Section: Int, Hashable {
     case main
   }
   
-  typealias DataSource = UICollectionViewDiffableDataSource<Section, Date>
+  public typealias DataSource = UICollectionViewDiffableDataSource<Section, Date>
   
   private typealias SnapShot = NSDiffableDataSourceSnapshot<Section, Date>
   
   private var snapshot = SnapShot()
   
-  private(set) lazy var dataSource: DataSource = DataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, date -> UICollectionViewCell? in
+  public lazy var dataSource: DataSource = DataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, date -> UICollectionViewCell? in
     guard let self = self else { return nil }
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath) as! DateCell
     let calendar = Calendar(identifier: .gregorian)
@@ -103,7 +103,7 @@ class SPWeekView: UIView {
   
   // MARK: - Init
   
-  init(dates: [Date]) {
+  public init(dates: [Date]) {
     super.init(frame: .zero)
     self.dates = dates
     setupViews()
@@ -116,7 +116,7 @@ class SPWeekView: UIView {
     reloadData()
   }
   
-  override func layoutSubviews() {
+  public override func layoutSubviews() {
     super.layoutSubviews()
     collectionView.collectionViewLayout.invalidateLayout()
     guard let selectedDate = selectedDate else { return }
@@ -170,7 +170,7 @@ extension SPWeekView {
 
 // MARK: - Public Methods
 
-extension SPWeekView {
+public extension SPWeekView {
   
   /// Reload the data for the week view.
   func reloadData() {
@@ -217,7 +217,7 @@ extension SPWeekView {
 
 extension SPWeekView: UICollectionViewDelegate {
   
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     // Set the selected date and do some internal animations.
     guard let date = dataSource.itemIdentifier(for: indexPath) else { return }
     selectDate(date, animated: self.selectedDate == date)
