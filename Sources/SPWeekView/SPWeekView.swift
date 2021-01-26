@@ -231,7 +231,7 @@ extension SPWeekView {
   
   /// Returns dates 1 month before and after the specified date.
   /// With the start and end date rounding down and up to Sunday and Saturday respectively.
-  static func generateDates(fromDate date: Date) -> [Date] {
+  public static func generateDates(fromDate date: Date) -> [Date] {
     let calendar = Calendar(identifier: .gregorian)
     let now = calendar.startOfDay(for: date)
     
