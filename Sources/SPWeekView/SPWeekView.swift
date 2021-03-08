@@ -47,11 +47,7 @@ public class SPWeekView: UIView {
   /// The type of scrolling for the week view.
   /// continous will set the scrolling to be continous.
   /// paginated will set the scrolling to be paginated by 7 days a week.
-  public var scrollType: ScrollType = .continous {
-    didSet {
-      collectionView.setCollectionViewLayout(createLayout(), animated: true)
-    }
-  }
+  public var scrollType: ScrollType = .continous
   
   /// The object that acts as the delegate of the week view.
   public weak var delegate: SPWeekViewDelegate?
@@ -62,7 +58,7 @@ public class SPWeekView: UIView {
   private let calendar = Calendar(identifier: .gregorian)
   
   private lazy var collectionView: UICollectionView = {
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     collectionView.alwaysBounceVertical = false
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.register(DateCell.self, forCellWithReuseIdentifier: "dateCell")
@@ -141,9 +137,13 @@ extension SPWeekView {
   }
   
   /// Returns the layout for the week view.
-  private func createLayout() -> UICollectionViewLayout {
+  /// Provide the layoutWidth for iOS 13 and below.
+  func createLayout(layoutWidth: CGFloat) -> UICollectionViewLayout {
     // Item
-    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 7), heightDimension: .fractionalHeight(1.0))
+    let padding: CGFloat = 8.0
+    var itemLayoutWidthDimension: NSCollectionLayoutDimension = .absolute((layoutWidth - padding) / 7)
+    if #available(iOS 14.0, *) { itemLayoutWidthDimension = .fractionalWidth(1 / 7) }
+    let itemSize = NSCollectionLayoutSize(widthDimension: itemLayoutWidthDimension, heightDimension: .fractionalHeight(1.0))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
     // Group
