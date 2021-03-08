@@ -138,7 +138,7 @@ extension SPWeekView {
   
   /// Returns the layout for the week view.
   /// Provide the layoutWidth for iOS 13 and below.
-  func createLayout(layoutWidth: CGFloat) -> UICollectionViewLayout {
+  public func createLayout(layoutWidth: CGFloat) -> UICollectionViewLayout {
     // Item
     let padding: CGFloat = 8.0
     var itemLayoutWidthDimension: NSCollectionLayoutDimension = .absolute((layoutWidth - padding) / 7)
