@@ -57,7 +57,7 @@ public class SPWeekView: UIView {
   /// The Gregorian calendar for the date calculations.
   private let calendar = Calendar(identifier: .gregorian)
   
-  private lazy var collectionView: UICollectionView = {
+  public lazy var collectionView: UICollectionView = {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     collectionView.alwaysBounceVertical = false
     collectionView.translatesAutoresizingMaskIntoConstraints = false
